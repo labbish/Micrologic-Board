@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Micrologic">
+      <UniqueIdentifier>{a57f0c2f-555f-4f06-af6a-22daf70a76a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Micrologic Board.cpp">
@@ -20,6 +23,33 @@
     </ClCompile>
     <ClCompile Include="Board.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Micrologic\Block.cpp">
+      <Filter>Micrologic</Filter>
+    </ClCompile>
+    <ClCompile Include="Micrologic\BlockA.cpp">
+      <Filter>Micrologic</Filter>
+    </ClCompile>
+    <ClCompile Include="Micrologic\BlockC.cpp">
+      <Filter>Micrologic</Filter>
+    </ClCompile>
+    <ClCompile Include="Micrologic\BlockN.cpp">
+      <Filter>Micrologic</Filter>
+    </ClCompile>
+    <ClCompile Include="Micrologic\BlockP.cpp">
+      <Filter>Micrologic</Filter>
+    </ClCompile>
+    <ClCompile Include="Micrologic\BlockR.cpp">
+      <Filter>Micrologic</Filter>
+    </ClCompile>
+    <ClCompile Include="Micrologic\Blocks.cpp">
+      <Filter>Micrologic</Filter>
+    </ClCompile>
+    <ClCompile Include="Micrologic\BlockT.cpp">
+      <Filter>Micrologic</Filter>
+    </ClCompile>
+    <ClCompile Include="Micrologic\Line.cpp">
+      <Filter>Micrologic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +70,36 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\Block.h">
+      <Filter>Micrologic</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\BlockA.h">
+      <Filter>Micrologic</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\BlockC.h">
+      <Filter>Micrologic</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\BlockN.h">
+      <Filter>Micrologic</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\BlockP.h">
+      <Filter>Micrologic</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\BlockR.h">
+      <Filter>Micrologic</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\Blocks.h">
+      <Filter>Micrologic</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\BlockT.h">
+      <Filter>Micrologic</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\StableVector.h">
+      <Filter>Micrologic</Filter>
+    </ClInclude>
+    <ClInclude Include="Micrologic\Line.h">
+      <Filter>Micrologic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

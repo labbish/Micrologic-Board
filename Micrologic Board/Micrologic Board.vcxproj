@@ -133,6 +133,15 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Micrologic Board.cpp" />
+    <ClCompile Include="Micrologic\Block.cpp" />
+    <ClCompile Include="Micrologic\BlockA.cpp" />
+    <ClCompile Include="Micrologic\BlockC.cpp" />
+    <ClCompile Include="Micrologic\BlockN.cpp" />
+    <ClCompile Include="Micrologic\BlockP.cpp" />
+    <ClCompile Include="Micrologic\BlockR.cpp" />
+    <ClCompile Include="Micrologic\Blocks.cpp" />
+    <ClCompile Include="Micrologic\BlockT.cpp" />
+    <ClCompile Include="Micrologic\Line.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
@@ -140,6 +149,16 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="Micrologic\Block.h" />
+    <ClInclude Include="Micrologic\BlockA.h" />
+    <ClInclude Include="Micrologic\BlockC.h" />
+    <ClInclude Include="Micrologic\BlockN.h" />
+    <ClInclude Include="Micrologic\BlockP.h" />
+    <ClInclude Include="Micrologic\BlockR.h" />
+    <ClInclude Include="Micrologic\Blocks.h" />
+    <ClInclude Include="Micrologic\BlockT.h" />
+    <ClInclude Include="Micrologic\Line.h" />
+    <ClInclude Include="Micrologic\StableVector.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

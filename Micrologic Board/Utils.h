@@ -9,6 +9,8 @@
 #include <functional>
 #include <easyx.h>
 
+#include "Micrologic/Blocks.h"
+
 #ifdef BOARD_DEBUG
 #include <cstdio>
 #endif

@@ -4,6 +4,9 @@ bool end = false;
 
 const std::vector<double> Board::scales = { 1.0 / 2, 2.0 / 3, 1, 1.5, 2 };
 
+const GridCoordinate Board::NoGrid = GridCoordinate((unsigned)(-1), (unsigned)(-1));
+const std::wstring Board::NoInput = L"";
+
 void Board::init() {
 	initgraph((int)Width, (int)Height);
 	setbkcolor(BkColor);
@@ -158,7 +161,7 @@ void Board::drawBlocks() {
 	for (const std::pair<GridCoordinate, Block>& blockPos : blocks) {
 		GridCoordinate pos = blockPos.first;
 		Block block = blockPos.second;
-		block.draw(Rect(gridPointTrueCoordinate(pos), gridPointTrueCoordinate(pos + GridCoordinate(1, 1))));
+		block.draw(Rect(gridPointTrueCoordinate(pos), gridPointTrueCoordinate(pos + block.gridSize())));
 	}
 }
 
@@ -174,6 +177,9 @@ void Board::drawButtons() {
 	for (const Button& button : buttons) {
 		button.draw();
 	}
+}
+
+void Board::flushButtons() {
 	ExMessage mouseMsg;
 	peekmessage(&mouseMsg, EX_MOUSE);
 	for (int i = 0; i < buttons.size(); i++) {
@@ -185,6 +191,7 @@ void Board::drawButtons() {
 			}
 		}
 		if (buttons[i].flushStatus(mouseMsg) == Button::CLICKED) {
+			draw();
 			switch (i) {
 			case 0:moveOrigin(Coordinate(0, -20)); break;
 			case 1:moveOrigin(Coordinate(0, 20)); break;
@@ -194,15 +201,49 @@ void Board::drawButtons() {
 			case 5:/*tick*/ break;
 			case 6:addScale(); break;
 			case 7:minusScale(); break;
-			case 8:break;
-			case 9:break;
-			case 10:break;
+			case 8: {
+				std::function<bool(const ExMessage&)> exit = [=](const ExMessage& mouseMsg) -> bool {
+					return buttons[8].flushStatus(mouseMsg) == Button::CLICKED;
+					};
+				GridCoordinate pos = getMouseGrid(exit);
+				if (pos != NoGrid) {
+					std::wstring type = getText(L"Block Type:", L"Block Type Input", L"",
+						[this](std::wstring str) {
+							return this->isBlockType(str);
+						});
+					if (type != NoInput) blocks.insert({ pos, Block(type) });
+					buttons[8].isEnabled = false;
+				}
+				break;
+			}
+			case 9: {
+				std::function<bool(const ExMessage&)> exit = [=](const ExMessage& mouseMsg) -> bool {
+					return buttons[9].flushStatus(mouseMsg) == Button::CLICKED;
+					};
+				GridCoordinate pos = getMouseGrid(exit);
+				if (pos != NoGrid) {
+					lines.insert({ pos, Line(0, Line::NONE, Line::NONE, Line::NONE, Line::NONE) });
+					buttons[9].isEnabled = false;
+				}
+				break;
+			}
+			case 10: {
+				std::function<bool(const ExMessage&)> exit = [=](const ExMessage& mouseMsg) -> bool {
+					return buttons[10].flushStatus(mouseMsg) == Button::CLICKED;
+					};
+				GridCoordinate pos = getMouseGrid(exit);
+				if (pos != NoGrid) {
+					lines.insert({ pos, Line({ 0, 0, 0, 0 }, Line::NONE, Line::NONE, Line::NONE, Line::NONE) });
+					buttons[10].isEnabled = false;
+				}
+				break;
+			}
 			}
 		}
 	}
 }
 
-void Board::drawTest() {
+void Board::tickTest() {
 #ifdef BOARD_DEBUG
 	lines[GridCoordinate(-3, 0)].value = !lines[GridCoordinate(-3, 0)].value;
 #endif
@@ -213,10 +254,19 @@ void Board::draw() {
 
 	drawOrigin();
 	drawGrid();
-	drawTest();
 	drawBlocks();
 	drawLines();
 	drawButtons();
 
 	FlushBatchDraw();
+}
+
+void Board::flush() {
+	flushButtons();
+}
+
+void Board::tick() {
+	draw();
+	flush();
+	tickTest();
 }

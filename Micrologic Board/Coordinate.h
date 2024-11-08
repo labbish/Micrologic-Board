@@ -77,3 +77,8 @@ namespace std {
 		}
 	};
 }
+
+using Coordinate = TemplateCoordinate<double>;
+using TrueCoordinate = TemplateCoordinate<double>;
+using GridCoordinate = TemplateCoordinate<int>;
+using ButtonCoordinate = TemplateCoordinate<int>;

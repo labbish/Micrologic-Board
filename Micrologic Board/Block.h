@@ -5,10 +5,12 @@
 
 class Block {
 public:
+	int x = 1, y = 1;
 	static const COLORREF FillColor = CYAN, TextColor = BLACK;
 	Block() :type(L"") {}
-	Block(LPCTSTR type) :type(type) {}
-	LPCTSTR type;
+	Block(std::wstring type) :type(type) {}
+	Block(std::wstring type, int x, int y) :type(type), x(x), y(y) {}
+	std::wstring type;
 	inline void draw(RECT r) const {
 		double length = abs(r.right - r.left);
 		setfillcolor(FillColor);
@@ -17,7 +19,10 @@ public:
 		setbkmode(TRANSPARENT);
 		settextcolor(TextColor);
 		settextstyle((int)(length / 3), 0, L"Consolas");
-		drawtext(type, &r, DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX);
+		drawtext(type.c_str(), &r, DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX);
+	}
+	inline GridCoordinate gridSize() {
+		return GridCoordinate(x, y);
 	}
 };
 
@@ -37,6 +42,6 @@ public:
 		setbkmode(TRANSPARENT);
 		settextcolor(TextColor);
 		settextstyle((int)(length), 0, L"Consolas");
-		drawtext(type, &r, DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX);
+		drawtext(type.c_str(), &r, DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX);
 	}
 };

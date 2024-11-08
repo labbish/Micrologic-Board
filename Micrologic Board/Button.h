@@ -6,9 +6,9 @@ class Button;
 void defaultDrawText(const Button*);
 
 class Button {
+public:
 	bool isDown = false;
 	bool isEnabled = false;
-public:
 	enum STATUS {
 		NONE, ON, DOWN, CLICKED
 	};

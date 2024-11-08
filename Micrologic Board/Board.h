@@ -9,10 +9,6 @@
 #include "Line.h"
 #include "Button.h"
 
-using Coordinate = TemplateCoordinate<double>;
-using TrueCoordinate = TemplateCoordinate<double>;
-using GridCoordinate = TemplateCoordinate<int>;
-using ButtonCoordinate = TemplateCoordinate<int>;
 using Length = double;
 using TrueLength = double;
 
@@ -23,6 +19,8 @@ public:
 		ButtonColor = GREEN, EndButtonColor = RED, TextColor = Button::TextColor;
 	static constexpr TrueLength Width = 960, Height = 720, GridLength = 100,
 		ButtonWidth = 30, ButtonHeight = 30, ButtonWidthSpacing = 10, ButtonHeightSpacing = 10;
+	static const GridCoordinate NoGrid;
+	static const std::wstring NoInput;
 	static const std::vector<double> scales;
 	inline static const Coordinate midPoint() {
 		return Coordinate(Width / 2, Height / 2);
@@ -81,7 +79,7 @@ public:
 		return trueCoordinate(gridPointCoordinate(gridPos));
 	}
 	inline bool inBoard(TrueCoordinate C) {
-		return C.x > 0 && C.x < Width && C.y>0 && C.y < Height;
+		return C.x > 0 && C.x < Width && C.y > 0 && C.y < Height;
 	}
 	inline RECT buttonPosition(int x, int y) {
 		return {
@@ -102,7 +100,29 @@ public:
 		return { (long)C1.x, (long)C1.y, (long)C2.x, (long)C2.y };
 	}
 	inline GridCoordinate mouseGrid(const ExMessage& mouseMsg) {
-		return GridCoordinate((int)floor((mouseMsg.x - origin.x) / (scale * gridWidth)), (int)floor((origin.y - mouseMsg.y) / (scale * gridHeight)));
+		return GridCoordinate((int)floor((mouseMsg.x - origin.x) / (scale * gridWidth)),
+			(int)floor((origin.y - mouseMsg.y) / (scale * gridHeight)));
+	}
+	inline GridCoordinate getMouseGrid(std::function<bool(const ExMessage&)> exitCondition) {
+		while (1) {
+			ExMessage mouseMsg;
+			peekmessage(&mouseMsg, EX_MOUSE);
+			GridCoordinate pos = mouseGrid(mouseMsg);
+			if (exitCondition(mouseMsg)) return NoGrid;
+			if (inBoard(pos) && mouseMsg.lbutton) return pos;
+		}
+	}
+	inline std::wstring getText(LPCTSTR pPrompt, LPCTSTR pTitle, LPCTSTR pDefault,
+		std::function<bool(std::wstring)> isAcceptable) {
+		while (1) {
+			wchar_t str[128];
+			bool inputted = InputBox(str, 128, pPrompt, pTitle, pDefault, 0, 0, false);
+			if (!inputted) return NoInput;
+			if (isAcceptable(str)) return str;
+		}
+	}
+	inline bool isBlockType(std::wstring type) {
+		return true;
 	}
 	static void line(Coordinate, Coordinate);
 	void init();
@@ -112,6 +132,9 @@ public:
 	void drawBlocks();
 	void drawLines();
 	void drawButtons();
-	void drawTest();
+	void flushButtons();
+	void tickTest();
 	void draw();
+	void flush();
+	void tick();
 };
